@@ -7,7 +7,7 @@ A simple, type-safe integration for [JustCMS](https://justcms.co) in your NuxtJS
 - **TypeScript support:** Fully typed structures for API responses.
 - **Single Composable:** All JustCMS API calls are encapsulated in one composable.
 - **Easy Integration:** Simply configure your API token and project ID in your Nuxt runtime configuration.
-- **Flexible Endpoints:** Supports fetching categories, pages (with filtering and pagination), a page by its slug, and a menu by its ID.
+- **Flexible Endpoints:** Supports fetching categories, pages (with filtering and pagination), a page by its slug, a menu by its ID, and layouts (single or multiple).
 
 ## Installation
 
@@ -112,6 +112,20 @@ const menu = await getMenuById('main-menu')
 // Returns: Menu | null
 ```
 
+#### `getLayoutById(id: string)`
+Fetches a single layout by its ID.
+```ts
+const layout = await getLayoutById('footer')
+// Returns: Layout
+```
+
+#### `getLayoutsByIds(ids: string[])`
+Fetches multiple layouts at once by their IDs.
+```ts
+const layouts = await getLayoutsByIds(['footer', 'header'])
+// Returns: Layout[]
+```
+
 #### Utility Functions
 
 The composable also provides several helpful utility functions for working with JustCMS content:
@@ -152,5 +166,7 @@ The composable wraps the following JustCMS API endpoints:
 - **Get Pages:** Retrieve pages with optional filtering (by category slug) and pagination.
 - **Get Page by Slug:** Retrieve detailed information about a specific page.
 - **Get Menu by ID:** Retrieve a menu and its items by its unique identifier.
+- **Get Layout by ID:** Retrieve detailed information about a single layout, including its items and metadata.
+- **Get Layouts by IDs:** Retrieve multiple layouts at once by specifying an array of layout IDs.
 
 For more details on each endpoint, refer to the [JustCMS Public API Documentation](https://justcms.co/api).

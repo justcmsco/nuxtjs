@@ -4,6 +4,7 @@ import { useRuntimeConfig } from 'nuxt/app';
  * Categories
  */
 export interface Category {
+  
   name: string
   slug: string
 }
@@ -150,6 +151,23 @@ export interface Menu {
   items: MenuItem[]
 }
 
+/**
+ * Layouts
+ */
+export interface LayoutItem {
+  label: string
+  description: string
+  uid: string
+  type: string
+  value: any
+}
+
+export interface Layout {
+  id: string
+  name: string
+  items: LayoutItem[]
+}
+
 export interface PageFilters {
   category: {
     slug: string
@@ -164,6 +182,8 @@ export interface PageFilters {
  * - getPages()
  * - getPageBySlug()
  * - getMenuById()
+ * - getLayoutById()
+ * - getLayoutsByIds()
  *
  * The API token and project ID are taken either from the runtime config (config.public.justCmsToken and config.public.justCmsProject)
  * or from the optional parameters.
@@ -291,11 +311,30 @@ export function useJustCms(apiToken?: string, projectIdParam?: string) {
     return page.categories.map((category) => category.slug).includes(categorySlug);
   };
 
+  /**
+   * Retrieves a single layout by its ID.
+   * @param id The layout ID.
+   */
+  const getLayoutById = async (id: string): Promise<Layout> => {
+    return get<Layout>(`layouts/${id}`)
+  }
+
+  /**
+   * Retrieves multiple layouts by their IDs.
+   * @param ids Array of layout IDs.
+   */
+  const getLayoutsByIds = async (ids: string[]): Promise<Layout[]> => {
+    const idsString = ids.join(';')
+    return get<Layout[]>(`layouts/${idsString}`)
+  }
+
   return {
     getCategories,
     getPages,
     getPageBySlug,
     getMenuById,
+    getLayoutById,
+    getLayoutsByIds,
     isBlockHasStyle,
     getLargeImageVariant,
     getFirstImage,
