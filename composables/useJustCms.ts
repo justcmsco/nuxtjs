@@ -158,8 +158,8 @@ export interface LayoutItem {
   label: string
   description: string
   uid: string
-  type: string
-  value: any
+  type: 'text' | 'html' | 'boolean' | 'svg'
+  value: string | boolean
 }
 
 export interface Layout {
